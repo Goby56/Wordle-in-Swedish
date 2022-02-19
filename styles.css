@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Serif+Text&display=swap");
+
+:root {
+    font-size: 16pt;
+    --bg-color: #121213;
+    --border-color: #818384;
+    --absent-color: #3a3a3c;
+    --text-color: #ffffff;
+    --present-color: #b59f3b;
+    --correct-color: #538d4e;
+    --logo-font: "DM Serif Text";
+}
+
+body {
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    margin-top: 5rem;
+    padding: 1rem;
+}
+
+.navbar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    width: 100%;
+    height: 10%;
+    padding: 0.6rem;
+    border-bottom: 0.05rem solid var(--border-color);
+}
+
+#title {
+    font-family: var(--logo-font);
+    font-size: 24pt;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.3s ease 0s;
+}
+
+a#title:hover {
+    color: var(--correct-color);
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 30%;
+    margin-top: 3%;
+    margin-left: 40%;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 100%;
+    height: 100%;
+}
+
+.row {
+    display: flex;
+    padding: 0.125rem;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 80%;
+    height: calc(100% / 6);
+}
+
+.tile {
+    width: 2.5rem;
+    height: 2.3rem;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.25rem;
+    font-size: 2rem;
+    font-weight: bold;
+    vertical-align: middle;
+    color: var(--text-color);
+    text-transform: uppercase;
+    border: 0.1rem solid var(--border-color);
+}
