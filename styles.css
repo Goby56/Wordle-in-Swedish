@@ -48,44 +48,40 @@ a#title:hover {
     color: var(--correct-color);
 }
 
-.board-container {
+#board-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 25%;
-    height: 30%;
-    margin-top: 3%;
-    margin-left: 40%;
+    flex-grow: 1;
+    margin: auto;
+    margin-top: 10vh;
 }
 
 .board {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    width: 100%;
-    height: 100%;
+    display: grid;
+    gap: 0.2rem;
+    grid-template-rows: repeat(6, 1fr);
 }
 
 .row {
-    display: flex;
-    padding: 0.125rem;
-    flex-direction: row;
-    justify-content: space-evenly;
-    width: 80%;
-    height: calc(100% / 6);
+    display: grid;
+    gap: 0.2rem;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .tile {
-    width: 2.5rem;
-    height: 2.3rem;
     display: inline-flex;
+    vertical-align: middle;
     justify-content: center;
     align-items: center;
-    padding: 0.25rem;
+    background: var(--bg-color);
     font-size: 2rem;
-    font-weight: bold;
-    vertical-align: middle;
+    line-height: 2rem;
     color: var(--text-color);
+    width: 62px;
+    height: 62px;
+    border: 1px solid var(--border-color);
+    transition: all 500ms;
+    overflow: hidden;
     text-transform: uppercase;
-    border: 0.1rem solid var(--border-color);
 }
