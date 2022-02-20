@@ -81,6 +81,9 @@ async function submitGuess(guess, correctWord) {
             tileElements[numberOfGuesses * 5 + i].style.backgroundColor = correctColor;
         } else if (correctWord.includes(guess[i])) {
             tileElements[numberOfGuesses * 5 + i].style.backgroundColor = presentColor;
+            if (correctWord.count(guess[i]) === 1) {
+                break;
+            }
         } else {
             tileElements[numberOfGuesses * 5 + i].style.backgroundColor = absentColor;
         }
