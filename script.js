@@ -27,11 +27,11 @@ document.addEventListener("keydown", (event) => {
 });
 
 function addChar(key) {
-    tileElements[guesses * 5 + position].innerHTML = key;
+    tileElements[guesses * 5 + position].innerText = key;
 }
 
 function delChar() {
-    tileElements[guesses * 5 + position].innerHTML = "";
+    tileElements[guesses * 5 + position].innerText = "";
 }
 
 function submitWord(word) {
