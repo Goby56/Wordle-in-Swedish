@@ -85,3 +85,20 @@ a#title:hover {
     overflow: hidden;
     text-transform: uppercase;
 }
+
+.cheats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 1%;
+    font-size: 5rem;
+    text-transform: capitalize;
+}
+
+#cheat-button {
+    background-color: var(--bg-color);
+    border: 1px solid var(--border-color);
+    font-size: 2rem;
+    color: var(--text-color);
+}
