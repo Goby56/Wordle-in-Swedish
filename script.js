@@ -1,16 +1,16 @@
-async function getValidWords() {
-    const response = await fetch("./words.txt");
-    const validWords = (await response.text()).split("\n");
-    for (let i = 0; i < validWords.length; i++) {
-        validWords[i] = validWords[i].replace("\r", "");
+async function getWords(type) {
+    const response = await fetch(`./${type}-words.txt`);
+    const words = (await response.text()).split("\n");
+    for (let i = 0; i < words.length; i++) {
+        words[i] = words[i].replace("\r", "");
     }
-    return validWords;
+    return words;
 }
 
 // Run as soon as the page loads in
 document.addEventListener("DOMContentLoaded", reset());
 
-let randomWordID = randomNumberGenerator(0, 8190); // Hard coded number of available words
+let randomWordID = randomNumberGenerator(0, 4642); // Hard coded number of available words
 let guesses = [];
 let numberOfGuesses = 0;
 let position = 0;
@@ -36,7 +36,7 @@ async function reset() {
 }
 
 async function showCorrectWord() {
-    var validWords = await getValidWords();
+    var validWords = await getWords("valid");
     var correctWord = validWords[randomWordID];
     document.getElementById("display-correct-word").innerHTML = correctWord;
 }
@@ -57,8 +57,9 @@ document.addEventListener("keydown", async (event) => {
             for (let i = 0; i < 5; i++) {
                 guess += tileElements[numberOfGuesses * 5 + i].innerHTML;
             }
-            let validWords = await getValidWords();
-            if (validWords.includes(guess)) {
+            let decoyWords = await getWords("decoy");
+            let validWords = await getWords("valid");
+            if (decoyWords.includes(guess)) {
                 submitGuess(guess, validWords[randomWordID]);
             }
         }
@@ -76,18 +77,31 @@ function delChar() {
 }
 
 async function submitGuess(guess, correctWord) {
+    let charsOfCorrectWord = {};
+
+    for (let i = 0; i < 5; i++) {
+        if (typeof charsOfCorrectWord[correctWord[i]] === "undefined") {
+            charsOfCorrectWord[correctWord[i]] = 0;
+        }
+        charsOfCorrectWord[correctWord[i]] = charsOfCorrectWord[correctWord[i]] + 1;
+    }
+
     for (let i = 0; i < 5; i++) {
         if (guess[i] === correctWord[i]) {
             tileElements[numberOfGuesses * 5 + i].style.backgroundColor = correctColor;
-        } else if (correctWord.includes(guess[i])) {
+            charsOfCorrectWord[guess[i]]--;
+        }
+    }
+
+    for (let i = 0; i < 5; i++) {
+        if (correctWord.includes(guess[i]) && charsOfCorrectWord[guess[i]] > 0) {
             tileElements[numberOfGuesses * 5 + i].style.backgroundColor = presentColor;
-            if (correctWord.count(guess[i]) === 1) {
-                break;
-            }
-        } else {
+            charsOfCorrectWord[guess[i]]--;
+        } else if (!correctWord.includes(guess[i])) {
             tileElements[numberOfGuesses * 5 + i].style.backgroundColor = absentColor;
         }
     }
+
     numberOfGuesses++;
     position = 0;
     guesses.push(guess);
