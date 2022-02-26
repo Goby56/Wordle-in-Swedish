@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="keyboard">
-                <div class="row" id="long">
+                <div class="keyboard-row">
                     <button class="key">q</button>
                     <button class="key">w</button>
                     <button class="key">e</button>
@@ -76,7 +76,8 @@
                     <button class="key">p</button>
                     <button class="key">å</button>
                 </div>
-                <div class="row" id="long">
+                <div class="keyboard-row">
+                    <div class="spacer"></div>
                     <button class="key">a</button>
                     <button class="key">s</button>
                     <button class="key">d</button>
@@ -89,8 +90,7 @@
                     <button class="key">ö</button>
                     <button class="key">ä</button>
                 </div>
-                <div class="row" id="short">
-                    <button class="key">enter</button>
+                <div class="keyboard-row">
                     <button class="key">z</button>
                     <button class="key">x</button>
                     <button class="key">c</button>
@@ -98,13 +98,10 @@
                     <button class="key">b</button>
                     <button class="key">n</button>
                     <button class="key">m</button>
-                    <button class="key">back</button>
+                    <button class="key" id="double-wide">enter</button>
+                    <button class="key" id="double-wide">back</button>
                 </div>
             </div>
-        </div>
-        <div class="cheats">
-            <button id="cheat-button" onclick="showCorrectWord()">Visa rätt ord</button>
-            <p id="display-correct-word"></p>
         </div>
     </body>
 </html>

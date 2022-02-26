@@ -15,6 +15,7 @@ let guesses = [];
 let numberOfGuesses = 0;
 let position = 0;
 let tileElements = document.getElementsByClassName("tile");
+let keyeElements = document.getElementsByClassName("key");
 let gameRunning = true;
 
 bgColor = "#121213";
@@ -43,13 +44,22 @@ async function showCorrectWord() {
 
 document.addEventListener("keydown", async (event) => {
     position %= 6;
+
+    for (let element of keyeElements) {
+        if (element.innerHTML === event.key) {
+            element.style.animation = "depress 100ms";
+        }
+    }
+
     if ("abcdefghijklmnopqrstuvwxyzåäö".includes(event.key)) {
         if (position < 5) {
-            addChar(event.key);
+            tileElements[numberOfGuesses * 5 + position].innerText = event.key;
+            position++;
         }
     } else if (event.code === "Backspace") {
         if (position > 0) {
-            delChar();
+            position--;
+            tileElements[numberOfGuesses * 5 + position].innerText = "";
         }
     } else if (event.code == "Enter") {
         if (numberOfGuesses < 6 && position === 5) {
@@ -66,45 +76,63 @@ document.addEventListener("keydown", async (event) => {
     }
 });
 
-function addChar(key) {
-    tileElements[numberOfGuesses * 5 + position].innerText = key;
-    position++;
-}
-
-function delChar() {
-    position--;
-    tileElements[numberOfGuesses * 5 + position].innerText = "";
-}
-
 async function submitGuess(guess, correctWord) {
     let charsOfCorrectWord = {};
 
-    for (let i = 0; i < 5; i++) {
-        if (typeof charsOfCorrectWord[correctWord[i]] === "undefined") {
-            charsOfCorrectWord[correctWord[i]] = 0;
+    console.log(correctWord);
+
+    let revealInstructions = ["a", "a", "a", "a", "a"];
+
+    for (let i = 0; i < 15; i++) {
+        if (i / 5 < 1) {
+            if (typeof charsOfCorrectWord[correctWord[i]] === "undefined") {
+                charsOfCorrectWord[correctWord[i]] = 0;
+            }
+            charsOfCorrectWord[correctWord[i]]++;
+        } else if (i / 5 < 2) {
+            if (guess[i % 5] === correctWord[i % 5]) {
+                revealInstructions[i % 5] = "c";
+                charsOfCorrectWord[guess[i % 5]]--;
+            }
+        } else {
+            if (correctWord.includes(guess[i % 5]) && charsOfCorrectWord[guess[i % 5]] > 0) {
+                revealInstructions[i % 5] = "p";
+                charsOfCorrectWord[guess[i % 5]]--;
+            }
         }
-        charsOfCorrectWord[correctWord[i]] = charsOfCorrectWord[correctWord[i]] + 1;
     }
 
-    for (let i = 0; i < 5; i++) {
-        if (guess[i] === correctWord[i]) {
-            tileElements[numberOfGuesses * 5 + i].style.backgroundColor = correctColor;
-            charsOfCorrectWord[guess[i]]--;
-        }
-    }
+    console.log(revealInstructions);
 
-    for (let i = 0; i < 5; i++) {
-        if (correctWord.includes(guess[i]) && charsOfCorrectWord[guess[i]] > 0) {
-            tileElements[numberOfGuesses * 5 + i].style.backgroundColor = presentColor;
-            charsOfCorrectWord[guess[i]]--;
-        } else if (!correctWord.includes(guess[i])) {
-            tileElements[numberOfGuesses * 5 + i].style.backgroundColor = absentColor;
-        }
-    }
+    revealResult(revealInstructions, numberOfGuesses);
 
     numberOfGuesses++;
     position = 0;
     guesses.push(guess);
+}
+
+function revealResult(instuctions, nthGuess) {
+    for (let i = 0; i < 5; i++) {
+        if (instuctions[i] === "c") {
+            setTimeout(function () {
+                revealLetter(nthGuess, i, correctColor);
+            }, i * 250);
+        } else if (instuctions[i] === "p") {
+            setTimeout(function () {
+                revealLetter(nthGuess, i, presentColor);
+            }, i * 250);
+        } else {
+            setTimeout(function () {
+                revealLetter(nthGuess, i, absentColor);
+            }, i * 250);
+        }
+    }
+}
+
+function revealLetter(nthGuess, n, color) {
+    tileElements[nthGuess * 5 + n].style.backgroundColor = color;
+    //tileElements[nthGuess * 5 + n].style.transform = "rotateX(180deg)";
+    tileElements[nthGuess * 5 + n].style.animation = "flip 500ms";
 }
 
 function randomNumberGenerator(min, max) {
