@@ -52,6 +52,7 @@ a#title:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     flex-grow: 1;
     margin: auto;
     margin-top: 10vh;
@@ -69,6 +70,14 @@ a#title:hover {
     grid-template-columns: repeat(5, 1fr);
 }
 
+div.row#long {
+    grid-template-columns: repeat(11, 1fr);
+}
+
+div.row#short {
+    grid-template-columns: repeat(9, 1fr);
+}
+
 .tile {
     display: inline-flex;
     vertical-align: middle;
@@ -84,6 +93,26 @@ a#title:hover {
     transition: all 500ms;
     overflow: hidden;
     text-transform: uppercase;
+}
+
+.key {
+    font-family: inherit;
+    font-weight: bold;
+    border: 0;
+    padding: 0;
+    margin: 0 6px 0 0;
+    height: 58px;
+    border-radius: 4px;
+    cursor: pointer;
+    user-select: none;
+    background-color: var(--border-color);
+    color: var(--text-color);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
 }
 
 .cheats {
